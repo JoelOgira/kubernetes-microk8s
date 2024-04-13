@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hike-hawaii-service
+spec:
+  selector:
+    app: hike-hawaii
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3010
