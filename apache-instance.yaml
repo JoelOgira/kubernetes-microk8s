@@ -1,0 +1,73 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: CloudFormation Template to create a ec2 instance with apache web server.
+
+#------------------------
+#   METADATA
+#------------------------
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Compute Configuration
+        Parameters:
+          - InstanceName
+
+#------------------------
+#   PARAMETERS
+#------------------------
+
+Parameters:
+  InstanceName:
+    Type: String
+    Description: Enter the name of your resource you are creating.
+    Default: ApacheWebServer
+
+#------------------------
+#   RESOURCES
+#------------------------
+
+Resources:
+  ## Our EC2 SSH Key
+  SSHKey:
+    Type: "AWS::EC2::KeyPair"
+    Properties:
+      KeyName: !Join ["-", [!Ref InstanceName, "key-pair"]]
+
+  # Our EC2 security group
+  SSHSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SSH and HTTP
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: 22
+          IpProtocol: tcp
+          ToPort: 22
+        - CidrIp: 0.0.0.0/0
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+
+  ## EC2 Instance
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0d7a109bf30624c99
+      InstanceType: t2.micro
+      KeyName: !Ref SSHKey
+      SecurityGroups:
+        - !Ref SSHSecurityGroup
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash -xe
+          yum update -y
+          yum install -y httpd
+          systemctl start httpd
+          systemctl enable httpd
+          echo "Hello World from user data" > /var/www/html/index.html
+      Tags:
+        - Key: Name
+          Value: !Ref InstanceName
