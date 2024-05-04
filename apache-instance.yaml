@@ -25,22 +25,30 @@ Parameters:
     Description: Enter the name of your resource you are creating.
     Default: ApacheWebServer
 
+  ProjectName:
+    Type: String
+    Default: Hike Hawaii
+    Description: This is the name that will be used for tags to assist in cost tag allocation.
+
 #------------------------
 #   RESOURCES
 #------------------------
 
 Resources:
   ## Our EC2 SSH Key
-  SSHKey:
+  Ec2Key:
     Type: "AWS::EC2::KeyPair"
     Properties:
       KeyName: !Join ["-", [!Ref InstanceName, "key-pair"]]
+      Tags:
+        - Key: Name
+          Value: !Ref ProjectName
 
   # Our EC2 security group
-  SSHSecurityGroup:
+  HikeHawaiiSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: SSH and HTTP
+      GroupDescription: Apache Security Group
       SecurityGroupIngress:
         - CidrIp: 0.0.0.0/0
           FromPort: 22
@@ -50,24 +58,27 @@ Resources:
           FromPort: 80
           IpProtocol: tcp
           ToPort: 80
+      Tags:
+        - Key: Name
+          Value: !Ref ProjectName
 
   ## EC2 Instance
-  MyInstance:
+  HikeHawaiiInstance:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-0d7a109bf30624c99
       InstanceType: t2.micro
-      KeyName: !Ref SSHKey
+      KeyName: !Ref Ec2Key
       SecurityGroups:
-        - !Ref SSHSecurityGroup
+        - !Ref HikeHawaiiSecurityGroup
       UserData:
-        Fn::Base64: |
-          #!/bin/bash -xe
+        Fn::Base64: !Sub |
+          #!/bin/bash
           yum update -y
-          yum install -y httpd
-          systemctl start httpd
-          systemctl enable httpd
+          yum install httpd.x86_64 -y
+          systemctl start httpd.service
+          systemctl enable httpd.service
           echo "Hello World from user data" > /var/www/html/index.html
       Tags:
         - Key: Name
-          Value: !Ref InstanceName
+          Value: !Ref ProjectName
