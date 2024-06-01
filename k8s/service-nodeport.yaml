@@ -10,6 +10,6 @@ spec:
     # The port number that resources withing the cluster will use to communicate
     - port: 80
       # The port number that the container is listening on
-      targetPort: 3010
+      targetPort: 3000
       # The external port to connect to the node
       nodePort: 30003
