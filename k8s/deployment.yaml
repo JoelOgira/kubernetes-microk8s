@@ -15,17 +15,17 @@ spec:
         app: hike-hawaii
     spec:
       containers:
-        - name: hike-hawaii
-          image: public.ecr.aws/o9r8h0v8/public-ecr-repo:latest
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 3010
-              name: http
-              protocol: TCP
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 3010
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            failureThreshold: 3
+      - name: hike-hawaii
+        image: public.ecr.aws/o9r8h0v8/hike-hawaii-repo:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3010
+          name: http
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3010
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          failureThreshold: 3
