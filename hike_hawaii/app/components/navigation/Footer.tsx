@@ -64,8 +64,8 @@ export default function Footer() {
 
                             <div className='flex flex-col space-y-2 md:pl-32'>
                                 <p className='text-xl font-semibold pb-4 underline text-gray-300' >Get in Touch</p>
-                                <Link className='flex flex-row items-center space-x-4' href={'https://www.facebook.com/people/SANN-Opticals/100057699240184/'} target='_blank'> <span>Facebook:</span> <span><FaFacebookSquare className='text-xl hover:text-limeGreen' /></span> </Link>
-                                <Link className='flex flex-row items-center space-x-4' href={'https://instagram.com/calvinceochanda?igshid=OGQ5ZDc2ODk2ZA=='} target='_blank'> <span>Instagram:</span> <span><FaInstagramSquare className='text-xl hover:text-limeGreen' /></span> </Link>
+                                <Link className='flex flex-row items-center space-x-4' href={'https://www.facebook.com/'} target='_blank'> <span>Facebook:</span> <span><FaFacebookSquare className='text-xl hover:text-limeGreen' /></span> </Link>
+                                <Link className='flex flex-row items-center space-x-4' href={'https://instagram.com/'} target='_blank'> <span>Instagram:</span> <span><FaInstagramSquare className='text-xl hover:text-limeGreen' /></span> </Link>
                             </div>
                         </div>
 
