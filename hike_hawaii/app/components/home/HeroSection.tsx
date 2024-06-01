@@ -1,7 +1,7 @@
 import React from "react"
 import ButtonInternal from "../buttons/ButtonInternal"
 import Image from 'next/image'
-import Ochanda from '../../../public/images/Ochanda_sitting.jpg'
+import hero from '../../../public/images/hawaii-5074302_960_720.jpg'
 
 function HeroSection() {
   return (
@@ -32,8 +32,8 @@ function HeroSection() {
         </div>
         <div className="block">
           <Image
-            src={Ochanda}
-            alt="Calvince watching Hawaiian seas."
+            src={hero}
+            alt="Hawaii landscape"
             className="rounded-[1.5rem]"
           />
         </div>
