@@ -1,6 +1,6 @@
 FROM node:20-alpine
 
-ENV PORT=3010
+ENV PORT=3000
 
 COPY . ./hike-hawaii
 
